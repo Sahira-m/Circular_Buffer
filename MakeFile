@@ -1,0 +1,20 @@
+CXX = g++
+CXXFLAGS = -Wall -Wextra -std=c++11
+BUILD_DIR = build
+
+all: $(BUILD_DIR)/test
+
+$(BUILD_DIR)/test: $(BUILD_DIR)/CircularQueue.o $(BUILD_DIR)/test.o
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+$(BUILD_DIR)/Main.o: Buffer.cpp Buffer.hpp Main.cpp| $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c -o $@ Main.cpp
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+run: $(BUILD_DIR)/test
+	./$(BUILD_DIR)/test
+
+clean:
+	rm -rf $(BUILD_DIR)
